@@ -85,9 +85,6 @@ var alarm_status = true;
                         }
                         $('#notice_result').append("<a href='{% url 'account:alert_board' %}'>알림 더보기</a>")
                         alarm_status = false;
-                    } else {
-                        $('#notice_result').html("")
-                        alarm_status = true;
                     }
                 }else{
                     // 만들었다 사라졌다!! 아무것도 없을 경우!!
@@ -165,7 +162,7 @@ var alarm_status = true;
             </li>
             {% else %}
             <li class="nav-item">
-                <a style="color: green;" class="nav-link" href="/account/signup">✨회원가입</a>
+                <a style="color: green;" class="nav-link" href="{% url 'account:signup' %}?next={{request.path}}">✨회원가입</a>
             </li>
             <li class="nav-item">
                 <a style="color: blue;cursor: pointer;" class="nav-link" data-toggle="modal" data-target="#loginmodal" data-whatever="@mdo">🔑로그인</a>
@@ -175,11 +172,11 @@ var alarm_status = true;
               {% if user.is_authenticated %}
               <div style="margin:10px" class="dropdown">
               <span style="cursor: pointer;" id="notice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="notice_ajax()">{{user|alert_checking:user.profile.Name|safe}}</span>
-              <div style="padding:20px;" class="dropdown-menu alert-warning" aria-labelledby="notice" id="notice_result"></div>
+              <div style="padding:20px;" class="dropdown-menu dropdown-menu-right alert-warning" aria-labelledby="notice" id="notice_result"></div>
               </div>
               {% endif %}
             </div>
-          </nav>
+        </nav>
 
     {%block contents%}
     {%endblock%}

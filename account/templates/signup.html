@@ -172,6 +172,7 @@ tr, td {
                 <tr>
                     <td><span style="color:red;">{{error}}</span></td>
                 </tr>
+                <input type="hidden" id ="next" name="next" value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{next_page}}{% endif %}">
                 {% if messages %}
                 <tr>
                     <td>

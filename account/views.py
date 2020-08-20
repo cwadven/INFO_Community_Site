@@ -35,6 +35,7 @@ def login(request):
 def signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST, request.FILES)
+        next_page = request.POST.get('next','/')
         if request.POST["password1"]==request.POST["password2"]:
             if form.is_valid():
                 user = User.objects.create_user(
@@ -49,14 +50,15 @@ def signup(request):
                 )
                 profile.save()
                 auth.login(request, user)
-                return redirect('/')
+                return HttpResponseRedirect(next_page)
             else:
                 if "Email" in form.errors.keys():
                     messages.info(request, "올바른 이메일 주소를 입력하세요.")
                 
-                return redirect('/account/signup')
+                return render(request, 'signup.html', {'form':form, 'next_page':next_page,})
         else:
             error = "비밀번호를 다시 확인해주세요!"
+            return render(request, 'signup.html', {'form':form, 'next_page':next_page, "error":error,})
     else:
         if request.user.is_authenticated:
             return redirect('/account/profile')

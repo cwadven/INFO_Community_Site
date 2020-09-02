@@ -591,11 +591,7 @@ window.onload = function(){
             <div style="margin-bottom:10px;">이미지 : <input type="button" value="파일 선택" onclick="document.getElementById('id_image').click();" /><span id='files_count'> 선택된 파일 없음</span></div>
             <span style="display: none;" id="one_input"></span>
 
-            <!-- 눈속임 필요 (선택 후 몇개 추가) -->
-            <input style="display: none;" id="image_add" type="file" accept="image/*"/>
-            <span style="display: none;" id="image_fake"><input style="margin-bottom: 10px;" type="button" value="파일 추가" onclick="document.getElementById('image_add').click();" /></span>
             <output style="display: flex;flex-flow:wrap; margin-bottom: 10px;" id="result_picture"></output>
-
 
             <!-- ###### 첨부파일 수정하기 ###### -->
             <output style="width:100%;" id='preFile'>
@@ -612,9 +608,6 @@ window.onload = function(){
             <div style="margin-bottom:10px;">첨부파일 : <input type="button" value="파일 선택" onclick="document.getElementById('id_files').click();" /><span id='files_count_file'> 선택된 파일 없음</span></div>
             <span style="display: none;" id="one_input_file"></span>
 
-            <!-- 눈속임 필요 (선택 후 몇개 추가) -->
-            <input style="display: none;" id="file_add" type="file" accept="*"/>
-            <span style="display: none;" id="file_fake"><input style="margin-bottom: 10px;" type="button" value="파일 추가" onclick="document.getElementById('file_add').click();" /></span>
             <output style="width:100%;" id="result_file"></output>
 
             <input id="image_modify" type="text" name="image_modify" value='' hidden>

@@ -130,7 +130,7 @@ function delete_board() {
 }
 
 function delete_comment(x) {
-  var r = confirm("정말로 게시글을 삭제하시겠습니까?");
+  var r = confirm("정말로 댓글을 삭제하시겠습니까?");
   if (r == true) {
     location.href = "{% url 'forms:comment_del' detail_getForm.category detail_getForm.id '00000' %}".replace(/00000/, x);
   } else {
@@ -168,6 +168,10 @@ function delete_file(ele, i) {
 var count_imagefile=0;
 var count_file=0;
 
+//이미지 저장
+let image_data = [];
+let file_data = [];
+
 // 각각의 input type file에 파일을 주기 위해서 설정 (File -> Filelist로 만들기)
 function FileListItem(a) {
   a = [].slice.call(Array.isArray(a) ? a : arguments)
@@ -178,33 +182,29 @@ function FileListItem(a) {
 }
 
 function deletePreview(ele, i) {
-  try {
-      //이미지 미리보기가 삭제
-      $(ele).parent().remove();
-      
-      //1개씩 추가하는 가짜 버튼 위치 (onclick으로 image_add를 클릭하는 것과 동일)
-      //"선택된 파일" 무슨 파일인지 알려주는 텍스트를 안보이게 하기 위해 사용
-      var filesMore = document.getElementById("image_fake");
+    try {
+        //이미지 미리보기가 삭제
+        $(ele).parent().remove();
 
-      //1개씩 지우면 input에 있는 정보를 각각 삭제
-      document.getElementById("image"+i).value = ""
+        //삭제되고 새로운 파일이 들어오면 해당 배열의 값도 삭제하기 위해서 false로 만듦
+        image_data[(image_data.length-1)-i] = false;
 
-      //1개씩 삭제되므로 이미지 개수 -1개
-      count_imagefile = count_imagefile - 1
+        //1개씩 지우면 input에 있는 정보를 각각 삭제
+        document.getElementById("image"+i).value = "";
+        
+        //1개씩 삭제되므로 이미지 개수 -1개
+        count_imagefile = count_imagefile - 1;
 
-      //개수를 알려주는 곳에 변경된 개수 적용 시키기
-      files_count = document.getElementById("files_count");
-      if (count_imagefile == 0){
-          files_count.innerHTML = " 선택된 파일 없음";
-          filesMore.style.display = "none"
-      } else {
-          files_count.innerHTML = " 파일 " + count_imagefile + "개 ";
-      }
-
-      
-  } catch (e) {
-      console.log(e.message);
-  }
+        //개수를 알려주는 곳에 변경된 개수 적용 시키기
+        files_count = document.getElementById("files_count");
+        if (count_imagefile == 0){
+            files_count.innerHTML = " 선택된 파일 없음";
+        } else {
+            files_count.innerHTML = " 파일 " + count_imagefile + "개 ";
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
 }
 
 // ##### 파일 지우기 #####
@@ -213,21 +213,20 @@ function deleteFPreview(ele, i) {
     try {
         //이미지 미리보기가 삭제
         $(ele).parent().remove();
-        //1개씩 추가하는 가짜 버튼 위치 (onclick으로 image_add를 클릭하는 것과 동일)
-        //"선택된 파일" 무슨 파일인지 알려주는 텍스트를 안보이게 하기 위해 사용
-        var filesMore2 = document.getElementById("file_fake");
+
+        //삭제되고 새로운 파일이 들어오면 해당 배열의 값도 삭제하기 위해서 false로 만듦
+        file_data[(file_data.length-1)-i] = false;
 
         //1개씩 지우면 input에 있는 정보를 각각 삭제
-        document.getElementById("file"+i).value = ""
+        document.getElementById("file"+i).value = "";
 
         //1개씩 삭제되므로 이미지 개수 -1개
-        count_file = count_file - 1
+        count_file = count_file - 1;
 
         //개수를 알려주는 곳에 변경된 개수 적용 시키기
         files_count2 = document.getElementById("files_count_file");
         if (count_file == 0){
             files_count2.innerHTML = " 선택된 파일 없음";
-            filesMore2.style.display = "none"
         } else {
             files_count2.innerHTML = " 파일 " + count_file + "개 ";
         }
@@ -236,7 +235,6 @@ function deleteFPreview(ele, i) {
         console.log(e.message);
     }
 }
-
 
 // 수정하는 페이지
 window.onload = function(){
@@ -249,33 +247,28 @@ window.onload = function(){
 
         var filesInput = document.getElementById("id_image");
 
-        //1개씩 추가하는 가짜 버튼 위치 (onclick으로 image_add를 클릭하는 것과 동일)
-        //"선택된 파일" 무슨 파일인지 알려주는 텍스트를 안보이게 하기 위해 사용
-        var filesMore = document.getElementById("image_fake");
-
-        //1개씩 추가하는 진짜 버튼 위치
-        var filesfake = document.getElementById("image_add");
-        
         // ############## 모든 이미지 올려서 이미지 보이게 하기 ##############
-        filesInput.addEventListener("change", function(event){
-            var files = event.target.files; //FileList object
+        filesInput.addEventListener("input", function(event){
+            var pre_files = event.target.files; //FileList object
 
-            //1개씩 추가하는 가짜 버튼 위치 보이기
-            filesMore.style.display = "block"
-            
-            //눈속임용 글씨 보이게 만들기!
-            files_count = document.getElementById("files_count");
-            if (files.length == 0){
-                files_count.innerHTML = " 선택된 파일 없음";
-                filesMore.style.display = "none"
-            } else {
-                files_count.innerHTML = " 파일 " + files.length + "개 ";
+            //배열로 바꾼뒤 해당 배열안에 있는 요소를 a라는 배열에 전부 넣어서
+            //해당 배열을 FileListItem이라는 함수를 통해 FileList로 생성
+            let fileArray = Array.from(pre_files);
+
+            for (var i=0; i<fileArray.length; i++){
+                image_data.push(fileArray[i]);
             }
+
+            if(image_data){
+                image_data = image_data.filter(function(a){return a !== false});
+            }
+
+            let files = FileListItem(image_data);
             
             //미리보기 이미지를 보여주기 위한 장소 설정
             var output = document.getElementById("result_picture");
             //파일 입력으로 이미지를 다시 넣으면 기존에 있던 미리보기 이미지를 없애기! (초기화)
-            output.innerHTML = ""
+            output.innerHTML = "";
 
             // save_before는 한번 이상 이미지를 넣었으면! 다시 파일 입력을 할 때, 데이터가 저장되어 있는 input의 정보를 삭제한다!
             if (save_before){
@@ -284,39 +277,36 @@ window.onload = function(){
                 }
 
                 //삭제가 되면 (초기화 값)
-                save_before = false
-
-                //1개씩 추가하는 가짜 버튼 위치 안보이기
-                filesMore.style.display = "none"
+                save_before = false;
             }
 
             //여러개 이미지의 개수를 알기 위해서
-            count_imagefile = files.length
+            count_imagefile = files.length;
 
             // 다중으로 할 수 있는 input type file을 각각 삭제 가능하게 만들기 위해서 하나씩 생성 후, 어떤 버튼을 클릭하면 하나씩 삭제
             for (var i = 0; i < files.length; i++){
 
-                var _file = new FileListItem(files[i])
+                var _file = new FileListItem(files[i]);
 
                 var one_input = document.getElementById("one_input");
                 var _input = document.createElement("input");
-                _input.type = "file"
+                _input.type = "file";
 
                 // 다중으로 받은 input을 각자 관리하기 위해 지우거나 나중에 관리 할 수 있도록 id를 다르게 줘서 정의했다
-                _input.id = "image"+i
+                _input.id = "image"+i;
                 // FileList를 받기 위해서 true로 설정
-                _input.multiple = true
-                _input.accept = "image/*"
+                _input.multiple = true;
+                _input.accept = "image/*";
                 // name을 postimage로 한 이유는 Views에서 데이터베이스로 저장하는 것은 postimage만 저장하도록 하기 위해!
-                _input.name = "postimage"
-                _input.files = _file
+                _input.name = "postimage";
+                _input.files = _file;
                 one_input.insertBefore(_input,null);
 
-                save_before = true
-                save_howmany = files.length
+                save_before = true;
+                save_howmany = files.length;
             }
 
-            for(var i = 0; i< files.length; i++)
+            for(var i = 0; i < files.length; i++)
             {
                 var file = files[i];
                 //Only pics
@@ -330,7 +320,7 @@ window.onload = function(){
                     picReader.onload = function(event){
                         var picFile = event.target;
                         var div = document.createElement("div");
-                        div.style.textAlign = "center"
+                        div.style.textAlign = "center";
                         div.innerHTML = "<img style='margin-right:5px;' width=80 height=80 class='thumbnail' src='" + picFile.result + "'" +
                         "title=''/><br><span style='cursor: pointer' class='delete' onClick='deletePreview(this, " + id + ")'>❌삭제</span>";
                         output.insertBefore(div,null);
@@ -339,64 +329,18 @@ window.onload = function(){
                 //Read the image
                 picReader.readAsDataURL(file);
             }
-        });
 
-        // ############## 올린 후, 1개씩만 추가하기 위해서 ##############
-        filesfake.addEventListener("change", function(event){
-            
-            var files = event.target.files; //FileList object
-            var output = document.getElementById("result_picture");
-
-            // 반복문을 돌릴 필요는 없지만 그냥 놔뒀음
-            for (var i = 0; i < files.length; i++){
-
-                var a = new FileListItem(files[i])
-                var one_input = document.getElementById("one_input");
-                var _input = document.createElement("input");
-                _input.type = "file"
-                _input.id = "image"+count_imagefile
-                _input.multiple = true
-                _input.accept = "image/*"
-                _input.name = "postimage"
-                _input.files = a
-                one_input.insertBefore(_input,null);
-
-                save_howmany = count_imagefile + 1 // 한개씩 추가한 것도 취소 되면 지울 수 있도록
-
-            }
-
-            for(var i = 0; i< files.length; i++)
-            {
-                var file = files[i];
-
-                //Only pics
-                if(!file.type.match("image"))
-                    continue;
-                    
-                var picReader = new FileReader();
-
-                getid(count_imagefile) //function을 만들어서 안에 넣으면 i라는 값을 onload안에 넣을 수 있음!!
-
-                function getid(id){ 
-                    picReader.onload = function(event){
-                        var picFile = event.target;
-                        var div = document.createElement("div");
-                        div.style.textAlign = "center"
-                        div.innerHTML = "<img style='margin-right:5px;' width=80 height=80 class='thumbnail' src='" + picFile.result + "'" +
-                        "title=''/><br><span style='cursor: pointer' class='delete' onClick='deletePreview(this, " + id + ")'>❌삭제</span>";
-                        output.insertBefore(div,null);
-                    }
-                }
-
-                //Read the image
-                picReader.readAsDataURL(file);
-            }
-            if (!files.length == 0){
-                count_imagefile++;
-            }
-            // 추가된 후에 숫자 올라가기!
+            //눈속임용 글씨 보이게 만들기!
             files_count = document.getElementById("files_count");
-            files_count.innerHTML = " 파일 " + count_imagefile + "개 ";
+            if (files.length == 0){
+                files_count.innerHTML = " 선택된 파일 없음";
+            } else {
+                files_count.innerHTML = " 파일 " + files.length + "개 ";
+            }
+
+            //똑같은 내용을 넣기 위해서 target을 비워준다!
+            event.target.value = ''
+
         });
 
         // ##### 파일 #####
@@ -405,34 +349,38 @@ window.onload = function(){
         var save_howmany_file;
 
         var filesInput2 = document.getElementById("id_files");
-
-        //1개씩 추가하는 가짜 버튼 위치 (onclick으로 image_add를 클릭하는 것과 동일)
-        //"선택된 파일" 무슨 파일인지 알려주는 텍스트를 안보이게 하기 위해 사용
-        var filesMore2 = document.getElementById("file_fake");
-
-        //1개씩 추가하는 진짜 버튼 위치
-        var filesfake2 = document.getElementById("file_add");
         
         // ############## 모든 이미지 올려서 이미지 보이게 하기 ##############
-        filesInput2.addEventListener("change", function(event){
-            var files = event.target.files; //FileList object
+        filesInput2.addEventListener("input", function(event){
+            var pre_files2 = event.target.files; //FileList object
 
-            //1개씩 추가하는 가짜 버튼 위치 보이기
-            filesMore2.style.display = "block"
-            
+            //배열로 바꾼뒤 해당 배열안에 있는 요소를 a라는 배열에 전부 넣어서
+            //해당 배열을 FileListItem이라는 함수를 통해 FileList로 생성
+            let fileArray2 = Array.from(pre_files2);
+
+            for (var i=0; i<fileArray2.length; i++){
+                file_data.push(fileArray2[i]);
+            }
+
+            if(file_data){
+                file_data = file_data.filter(function(a){return a !== false});
+            }
+
+            console.log(file_data);
+            let files2 = FileListItem(file_data);
+
             //눈속임용 글씨 보이게 만들기!
             files_count2 = document.getElementById("files_count_file");
-            if (files.length == 0){
+            if (files2.length == 0){
                 files_count2.innerHTML = " 선택된 파일 없음";
-                filesMore2.style.display = "none"
             } else {
-                files_count2.innerHTML = " 파일 " + files.length + "개 ";
+                files_count2.innerHTML = " 파일 " + files2.length + "개 ";
             }
             
             //미리보기 이미지를 보여주기 위한 장소 설정
             var output2 = document.getElementById("result_file");
             //파일 입력으로 이미지를 다시 넣으면 기존에 있던 미리보기 이미지를 없애기! (초기화)
-            output2.innerHTML = ""
+            output2.innerHTML = "";
 
             // save_before는 한번 이상 이미지를 넣었으면! 다시 파일 입력을 할 때, 데이터가 저장되어 있는 input의 정보를 삭제한다!
             if (save_before_file){
@@ -441,41 +389,38 @@ window.onload = function(){
                 }
 
                 //삭제가 되면 (초기화 값)
-                save_before_file = false
-
-                //1개씩 추가하는 가짜 버튼 위치 안보이기
-                filesMore2.style.display = "none"
+                save_before_file = false;
             }
 
             //여러개 이미지의 개수를 알기 위해서
-            count_file = files.length
+            count_file = files2.length;
 
             // 다중으로 할 수 있는 input type file을 각각 삭제 가능하게 만들기 위해서 하나씩 생성 후, 어떤 버튼을 클릭하면 하나씩 삭제
-            for (var i = 0; i < files.length; i++){
+            for (var i = 0; i < files2.length; i++){
 
-                var _file2 = new FileListItem(files[i])
+                var _file2 = new FileListItem(files2[i]);
 
                 var one_input2 = document.getElementById("one_input_file");
                 var _input2 = document.createElement("input");
-                _input2.type = "file"
+                _input2.type = "file";
 
                 // 다중으로 받은 input을 각자 관리하기 위해 지우거나 나중에 관리 할 수 있도록 id를 다르게 줘서 정의했다
-                _input2.id = "file"+i
+                _input2.id = "file"+i;
                 // FileList를 받기 위해서 true로 설정
-                _input2.multiple = true
+                _input2.multiple = true;
 
                 // name을 postimage로 한 이유는 Views에서 데이터베이스로 저장하는 것은 postimage만 저장하도록 하기 위해!
-                _input2.name = "postfile"
-                _input2.files = _file2
+                _input2.name = "postfile";
+                _input2.files = _file2;
                 one_input2.insertBefore(_input2,null);
 
-                save_before_file = true
-                save_howmany_file = files.length
+                save_before_file = true;
+                save_howmany_file = files2.length;
             }
 
-            for(var i = 0; i< files.length; i++)
+            for(var i = 0; i< files2.length; i++)
             {
-                var file = files[i];
+                var file = files2[i];
                     
                 var picReader = new FileReader();
 
@@ -494,60 +439,10 @@ window.onload = function(){
                 //Read the image
                 picReader.readAsDataURL(file);
             }
-        });
 
-        // ############## 올린 후, 1개씩만 추가하기 위해서 ##############
-        filesfake2.addEventListener("change", function(event){
-            
-            var files = event.target.files; //FileList object
-            var output2 = document.getElementById("result_file");
+            //똑같은 내용을 넣기 위해서 target을 비워준다!
+            event.target.value = ''
 
-            // 반복문을 돌릴 필요는 없지만 그냥 놔뒀음
-            for (var i = 0; i < files.length; i++){
-
-                var a = new FileListItem(files[i])
-                var one_input = document.getElementById("one_input_file");
-                var _input = document.createElement("input");
-                _input.type = "file"
-                _input.id = "file"+count_file
-                _input.multiple = true
-                _input.accept = "*"
-                _input.name = "postfile"
-                _input.files = a
-                one_input.insertBefore(_input,null);
-
-                save_howmany_file = count_file + 1 // 한개씩 추가한 것도 취소 되면 지울 수 있도록
-
-            }
-
-            for(var i = 0; i< files.length; i++)
-            {
-                var file = files[i];
-                    
-                var picReader = new FileReader();
-
-                getid(count_file, file.name) //function을 만들어서 안에 넣으면 i라는 값을 onload안에 넣을 수 있음!!
-
-                function getid(id, x){ 
-                    picReader.onload = function(event){
-                        var picFile = event.target;
-                        var div = document.createElement("div");
-                        div.style.display = "flex";
-                        div.style.justifyContent = "space-between";
-                        div.innerHTML = "<span>"+ x + "</span>" + "<span style='cursor: pointer' class='delete' onClick='deleteFPreview(this, " + id + ")'>❌삭제</span>";
-                        output2.insertBefore(div,null);
-                    }
-                }
-
-                //Read the image
-                picReader.readAsDataURL(file);
-            }
-            if (!files.length == 0){
-                count_file++;
-            }
-            // 추가된 후에 숫자 올라가기!
-            files_count2 = document.getElementById("files_count_file");
-            files_count2.innerHTML = " 파일 " + count_file + "개 ";
         });
     }
     else

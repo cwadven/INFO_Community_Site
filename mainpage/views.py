@@ -4,3 +4,6 @@ from category.models import *
 def main_show(request):
     show_all = Category.objects.all()
     return render(request, "main.html", {'show_all':show_all,})
+
+def goto_chatbot(request):
+    return render(request, "chatbot.html",{})

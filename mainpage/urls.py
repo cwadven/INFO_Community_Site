@@ -7,4 +7,5 @@ app_name = "mainpage"
 
 urlpatterns = [
     path('', views.main_show, name='main'),
+    path('chatbot/', views.goto_chatbot, name='goto_chatbot')
 ]

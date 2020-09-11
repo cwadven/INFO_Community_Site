@@ -546,6 +546,9 @@ window.onload = function(){
   Favorite : <span style="cursor: pointer;" onclick="ajax_board_favorite('{{detail_getForm.id}}', this)">{{detail_getForm|board_favorite:request.user.username|safe}}</span>
 </span>
 {% endif %}
+<span class="badge badge-light">
+  조회수 : {{detail_getForm.hits}}
+</span>
 </p>
 
 

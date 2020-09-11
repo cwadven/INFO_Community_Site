@@ -9,6 +9,7 @@ import json
 from django.db.models import Count
 from django.contrib import messages
 # Create your views here.
+import datetime
 
 from django.db.models import Q
 
@@ -79,6 +80,32 @@ def shw_form(request, board, id): #글의 자세한 내용 보여주기
     
     #글 내용 보여주기
     detail_getForm = get_object_or_404(Defaultform, id=id)
+
+    #조회수 중복 막기
+    if request.session.get('authUser') is None:
+        cookie_name = 'hit'
+    else:
+        cookie_name = f'hit:{request.session["authUser"]["id"]}'
+
+    response = render(request, 'form_detail.html', {'detail_getForm':detail_getForm})
+
+    #하루 뒤에 초기화
+    tomorrow = datetime.datetime.replace(datetime.datetime.now(), hour=23, minute=59, second=0)
+    expires = datetime.datetime.strftime(tomorrow, "%a, %d-%b-%Y %H:%M:%S GMT")
+
+    if request.COOKIES.get(cookie_name) is not None:
+        cookies = request.COOKIES.get(cookie_name)
+        cookies_list = cookies.split('|')
+        if str(id) not in cookies_list:
+            response.set_cookie(cookie_name, cookies + f'|{id}', expires=expires)
+            detail_getForm.hits += 1
+            detail_getForm.save()
+            return response
+    else:
+        response.set_cookie(cookie_name, id, expires=expires)
+        detail_getForm.hits += 1
+        detail_getForm.save()
+        return response
 
     #댓글 보여주기
     detail_getComment = Comment.objects.filter(main_post=detail_getForm, post__isnull=True)

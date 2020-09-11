@@ -160,12 +160,12 @@ var alarm_status = true;
                 <a style="color: red;" class="nav-link" href="{% url 'account:logout' %}?next={{request.path}}">📴로그아웃</a>
             </li>
             {% else %}
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a style="color: green;" class="nav-link" href="{% url 'account:signup' %}?next={{request.path}}">✨회원가입</a>
             </li>
             <li class="nav-item">
                 <a style="color: blue;cursor: pointer;" class="nav-link" data-toggle="modal" data-target="#loginmodal" data-whatever="@mdo">🔑로그인</a>
-            </li>
+            </li> -->
             {% endif %}
             </ul>
               {% if user.is_authenticated %}
@@ -211,7 +211,6 @@ var alarm_status = true;
           </div>
         </div>
       </div>
-    <div class="fixed-bottom" style="text-align:center;justify-content: center;background-color: #f4f4f4;">아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon">www.flaticon.com</a></div>
     <!-- <div>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <ins class="adsbygoogle"

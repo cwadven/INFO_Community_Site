@@ -411,6 +411,9 @@ window.onload = function(){
     <span class="badge badge-light">
         좋아요💖 : <span>{{form_contents.like_set.all|length}}</span>
     </span>
+    <span class="badge badge-light">
+        조회수 : {{form_contents.hits}}
+    </span>
 </p>
 <a href="{% url 'forms:shw_form' form_contents.category form_contents.id %}">자세히 보기</a> 
 <hr>

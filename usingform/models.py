@@ -28,6 +28,7 @@ class Defaultform(TimeStampedModel):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE,)
     body = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE,)
+    hits = models.PositiveIntegerField(default=0)
     tag_set = models.ManyToManyField('Tag', blank=True)
 
     class Meta:

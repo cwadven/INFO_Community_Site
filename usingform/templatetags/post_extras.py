@@ -9,7 +9,7 @@ register = template.Library()
 @register.filter
 def add_link(value):
     main_text = value.body
-    category = value.category.board_name
+    category = value.category.board_url_name
     tags = value.tag_set.all()
 
     if tags:

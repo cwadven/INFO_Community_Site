@@ -294,7 +294,7 @@ window.onload = function(){
 </script>
 {% endif %}
 {% for i in important_board %}
-<div style="margin-bottom: 10px;display:table;"><span style="display:table-cell;vertical-align:middle;background-color:{{i.post.category.color}};" class="badge">{{i.post.category.board_name}}</span><a style="display:table-cell;padding-left: 5px;" href="{% url 'forms:shw_form' i.post.category i.post.id %}">{{i.post.title_short}}</a></div>
+<div style="margin-bottom: 10px;display:table;"><span style="display:table-cell;vertical-align:middle;background-color:{{i.post.category.color}};" class="badge">{{i.post.category.board_name}}</span><a style="display:table-cell;padding-left: 5px;" href="{% url 'forms:shw_form' i.post.category.board_url_name i.post.id %}">{{i.post.title_short}}</a></div>
 {% endfor %}
 {% if user.is_anonymous %}
     <div style="display: flex;justify-content: space-between;">
@@ -369,7 +369,7 @@ window.onload = function(){
 {% if i.num_item > 0 %}
 <div style="margin-bottom:3px;display:table;">
     <span style="display:table-cell;vertical-align:middle;background-color:{{i.category.color}};" class="badge">인기글</span>
-    <a style="display:table-cell;padding-left: 5px;" href="{% url 'forms:shw_form' i.category i.id %}">{{i.title_short}}</a> 
+    <a style="display:table-cell;padding-left: 5px;" href="{% url 'forms:shw_form' i.category.board_url_name i.id %}">{{i.title_short}}</a> 
     <span style="margin-left: 5px;" class="badge badge-light">
         좋아요💖 : <span>{{i.num_item}}</span>
     </span>

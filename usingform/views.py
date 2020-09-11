@@ -13,12 +13,12 @@ import datetime
 
 from django.db.models import Q
 
-def selectform(request, board="자유게시판"): #작성하기 및 전체 글 보여주기
+def selectform(request, board="notice"): #작성하기 및 전체 글 보여주기
     if request.session.get('page'): #저장된 위치 삭제
         del request.session['page']
 
     #request.method == 'post'안에 있어야 하지만 예외 처리를 위해서 바깥에 착상    
-    getCategory = get_object_or_404(Category, board_name=board) #board는 url로 통해서 category에 선택하는 게시판을 클릭하면 board가 들어와짐
+    getCategory = get_object_or_404(Category, board_url_name=board) #board는 url로 통해서 category에 선택하는 게시판을 클릭하면 board가 들어와짐
 
     if request.method == 'POST':
         form = FormTest(request.POST)
@@ -62,15 +62,15 @@ def selectform(request, board="자유게시판"): #작성하기 및 전체 글 �
 
         #인기글 3개 가져오기 (.annotate => order_by를 이용할 수 있는 새로운 필드를 생성 기준을 Count('like') 즉, like 테이블 개수 기준으로)
         #이 글 기준 -> 좋아요의 여러 개수 -> Count클래스로 like 개수를 얻고 그것을 num_item이라는 정렬할 수 있는 새로운 필드를 생성 후 필드 값으로 대입한 느낌
-        like_board = Defaultform.objects.filter(category__board_name=board).annotate(num_item=Count('like')).order_by('-num_item')[:3]
+        like_board = Defaultform.objects.filter(category__board_url_name=board).annotate(num_item=Count('like')).order_by('-num_item')[:3]
 
         if search:
             #검색 기능 contains로 제목 기준으로 가져오기!
-            getForm = Defaultform.objects.filter(category__board_name=board).filter(Q(title__contains=search) | Q(body__contains=search))
+            getForm = Defaultform.objects.filter(category__board_url_name=board).filter(Q(title__contains=search) | Q(body__contains=search))
         else:
-            getForm = Defaultform.objects.filter(category__board_name=board)
+            getForm = Defaultform.objects.filter(category__board_url_name=board)
 
-    return render(request, 'formtest.html', {'like_board':like_board,'important_board':important_board,'form':form, 'imageform':imageform, 'filesform':filesform, 'getForm':getForm, 'board_name':board,})
+    return render(request, 'formtest.html', {'like_board':like_board,'important_board':important_board,'form':form, 'imageform':imageform, 'filesform':filesform, 'getForm':getForm, 'board_url_name':board, 'board_name':getCategory})
 
 
 

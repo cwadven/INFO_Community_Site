@@ -306,7 +306,7 @@ window.onload = function(){
     
 {% if user.is_anonymous %}
 <!-- 디자인 때문에 좀 복잡합니다 -->
-<form method="GET" style="text-align:right; margin-left:8px;" action="{% url 'forms:selectform' board_name %}">
+<form method="GET" style="text-align:right; margin-left:8px;" action="{% url 'forms:selectform' board_url_name %}">
     <span class="form-inline">
         <input style="width: 150px;margin-right: 5px;" type="text" class="form-control" name="search">
         <input type="submit" value="🔍">
@@ -318,7 +318,7 @@ window.onload = function(){
 {% if user.is_authenticated %}
 <div style="display: flex;justify-content: space-between;">
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">글쓰기</button>
-<form method="GET" style="text-align: right;margin-left:8px;" action="{% url 'forms:selectform' board_name %}">
+<form method="GET" style="text-align: right;margin-left:8px;" action="{% url 'forms:selectform' board_url_name %}">
     <div class="form-inline">
         <input style="width: 150px;margin-right: 5px;" type="text" class="form-control" name="search">
         <input type="submit" value="🔍">
@@ -335,7 +335,7 @@ window.onload = function(){
 {% endif %}
 <div class="collapse" id="collapseExample">
 <br>
-<form enctype="multipart/form-data" action="{% url 'forms:selectform' board_name %}" method="post">
+<form enctype="multipart/form-data" action="{% url 'forms:selectform' board_url_name %}" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_p }}
@@ -415,7 +415,7 @@ window.onload = function(){
         조회수 : {{form_contents.hits}}
     </span>
 </p>
-<a href="{% url 'forms:shw_form' form_contents.category form_contents.id %}">자세히 보기</a> 
+<a href="{% url 'forms:shw_form' form_contents.category.board_url_name form_contents.id %}">자세히 보기</a> 
 <hr>
 {% endfor %}
 

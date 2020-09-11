@@ -14,8 +14,9 @@
       modal.find('.modal-body input').val(recipient)
     })
 
-    function myFunction(x, y, color, z) {
+    function myFunction(x, xx, y, color, z) {
         document.getElementById("recipient-name").value = x;
+        document.getElementById("url_name").value = xx;
         document.getElementById("important").value = y;
         document.getElementById("color").value = color;
         document.getElementById("color").style.backgroundColor = color;
@@ -93,7 +94,7 @@
 <div>
 {% for i in show_all %}
 <a class="btn btn-lg" style="background-color:{{i.color}};color:black;box-shadow:0px 5px {{i.color}}61;margin:5px;" href="{% url 'forms:selectform' i.board_name %}"><b class="category">{{i.board_name}} </b></a> {% if user.is_superuser %}<div style="text-align: center;"><a class="btn btn-danger" href="javascript:delete_category({{i.id}}, '{{i.board_name}}');">🚮게시판 삭제</a>
-<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="myFunction('{{i.board_name}}', '{{i.important}}', '{{i.color}}','{{i.id}}');">🔁수정하기</button></div>{% endif %}
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" onclick="myFunction('{{i.board_name}}', '{{i.board_url_name}}', '{{i.important}}', '{{i.color}}','{{i.id}}');">🔁수정하기</button></div>{% endif %}
 {% endfor %}
 </div>
 {% if user.is_superuser %}
@@ -113,6 +114,8 @@
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">게시판 이름 :</label>
                   <input name="board_name" type="text" class="form-control" id="recipient-name" value="{{i.board_name}}" required> 
+                  <label for="important" class="col-form-label">게시판 주소 :</label>
+                  <input name="board_url_name" type="text" class="form-control" id="url_name" value="{{i.board_url_name}}" required> 
                   <label for="important" class="col-form-label">게시판 순서 :</label>
                   <input name="important" type="text" class="form-control" id="important" value="{{i.important}}" required> 
                   <label for="color" class="col-form-label">게시판 색깔 :</label>

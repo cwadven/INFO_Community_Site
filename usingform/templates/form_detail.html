@@ -123,7 +123,7 @@ function ajax_donot_alert(x, y){
 function delete_board() {
   var r = confirm("정말로 게시글을 삭제하시겠습니까?");
   if (r == true) {
-    location.href = "{% url 'forms:del_form' detail_getForm.category detail_getForm.id %}";
+    location.href = "{% url 'forms:del_form' detail_getForm.category.board_url_name detail_getForm.id %}";
   } else {
     return;
   }
@@ -132,7 +132,7 @@ function delete_board() {
 function delete_comment(x) {
   var r = confirm("정말로 댓글을 삭제하시겠습니까?");
   if (r == true) {
-    location.href = "{% url 'forms:comment_del' detail_getForm.category detail_getForm.id '00000' %}".replace(/00000/, x);
+    location.href = "{% url 'forms:comment_del' detail_getForm.category.board_url_name detail_getForm.id '00000' %}".replace(/00000/, x);
   } else {
     return;
   }
@@ -554,7 +554,7 @@ window.onload = function(){
 
 {% if detail_getForm.author.user.username == request.user.username or user.is_superuser %}
 <!-- 수정하기 modal -->
-<form enctype="multipart/form-data" action="{% url 'forms:mod_form' detail_getForm.category detail_getForm.id %}" method="post">
+<form enctype="multipart/form-data" action="{% url 'forms:mod_form' detail_getForm.category.board_url_name detail_getForm.id %}" method="post">
     {% csrf_token %}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -644,7 +644,7 @@ window.onload = function(){
 
 <!-- 댓글 작성 -->
 {% if user.is_authenticated %}
-<form action="{% url 'forms:comment_write' detail_getForm.category detail_getForm.id %}" method="post">
+<form action="{% url 'forms:comment_write' detail_getForm.category.board_url_name detail_getForm.id %}" method="post">
     {% csrf_token %}
     {{ commentform.as_table }}
     <input style="margin-top:5px;" type="submit" value="댓글입력">

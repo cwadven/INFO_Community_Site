@@ -5,6 +5,7 @@ from colorfield.fields import ColorField
 # Create your models here.
 class Category(models.Model):
     board_name = models.CharField(max_length=50, unique=True)
+    board_url_name = models.SlugField(max_length=50, unique=True)
     # “게시글 테이블” 이 Category 테이블을 참조하여 게시글 종류(board_name)별로 나눌 수 있도록 하기 위해서 사용
         # unique를 이용하여 똑같은 이름을 가진 게시글은 생성하지 못하도록 설정
     important = models.PositiveIntegerField(validators=[MinValueValidator(1)])

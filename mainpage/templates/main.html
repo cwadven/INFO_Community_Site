@@ -85,7 +85,7 @@
     <div style="padding:7px;" class="badge badge-pill badge-success">게시판</div>
     <div>
         {% for i in show_all %}
-            <a style="display:block;text-align: center; background-color: aquamarine; margin:7px;font-size: large;border-radius: 50px;padding: 5px;" href="{% url 'forms:selectform' i.board_name %}">{{i.board_name}}</a>
+            <a style="display:block;text-align: center; background-color: aquamarine; margin:7px;font-size: large;border-radius: 50px;padding: 5px;" href="{% url 'forms:selectform' i.board_url_name %}">{{i.board_name}}</a>
         {% endfor %}
     </div>
 </div>

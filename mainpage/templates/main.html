@@ -61,24 +61,19 @@
 </div>
 <hr>
 
+    
+
 <div>
     <a style="float: right;" href="#" target="_blank">더보기</a>
     <div style="padding:7px;" class="badge badge-pill badge-success">추천정보</div>
+    <!-- 해당 개시글로 가기 및 첫번째 이미지 기준으로 섬네일 보이게하기 -->
     <div style="margin-top:10px;" class="gallery js-flickity" data-flickity-options='{ "freeScroll": "true", "contain": true, "prevNextButtons": false,"pageDots": false,"imagesLoaded": true }'>
-        <a target='_blank' class="gallery-cell" href="#">
-            <img width='100%' height="100%" src="https://www.saraminimage.co.kr/event/contents/mento/2012/lyi_121115_1.jpg">
-        </a>
-        <a target='_blank' class="gallery-cell" href="#">
-            <img width='100%' height="100%" src="https://image.slidesharecdn.com/sns-170706142926/95/sns-1-638.jpg?cb=1502699987">
-        </a>
-        <a target='_blank' class="gallery-cell" href="#">
-            <img width='100%' height="100%" src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9993D9415CF0E67D24">
-        </a>
-        
+        {% for board in image_board %}
+            <a target='_blank' class="gallery-cell" href="{% url 'forms:shw_form' board.category board.id %}">
+                <img width='100%' height="100%" src="{{board.get_first_image}}">
+            </a>
+        {% endfor %}
     </div>
-    <!-- <br> -->
-    <!-- {{i.snippet.thumbnails.high.url}}<br> -->
-
 </div>
 <hr>
 <div>

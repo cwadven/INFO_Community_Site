@@ -56,6 +56,13 @@ class Defaultform(TimeStampedModel):
             tag, tag_created = Tag.objects.get_or_create(tag_name=t)
             self.tag_set.add(tag)
 
+    #이미지 하나만 보여주기
+    def get_first_image(self):
+        try:
+            return self.image_set.all()[0].image.url
+        except:
+            pass
+
     # def comment_count(self):
     #     self.comment_set
 

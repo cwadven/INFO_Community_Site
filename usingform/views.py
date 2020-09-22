@@ -179,7 +179,7 @@ def mod_form(request, board, id): #글 수정하기
 
 def del_form(request, board, id): #글 삭제하기
     post_instance = Defaultform.objects.get(id=id)
-    if post_instance.author.user.username == request.user.username:
+    if post_instance.author.user.username == request.user.username or request.user.is_superuser:
         post_instance.delete()
     return redirect('/board/'+str(board))
 

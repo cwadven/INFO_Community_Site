@@ -87,11 +87,22 @@ def shw_form(request, board, id): #글의 자세한 내용 보여주기
     else:
         cookie_name = f'hit:{request.session["authUser"]["id"]}'
 
-    response = render(request, 'form_detail.html', {'detail_getForm':detail_getForm})
-
     #하루 뒤에 초기화
     tomorrow = datetime.datetime.replace(datetime.datetime.now(), hour=23, minute=59, second=0)
     expires = datetime.datetime.strftime(tomorrow, "%a, %d-%b-%Y %H:%M:%S GMT")
+
+    #댓글 보여주기
+    detail_getComment = Comment.objects.filter(main_post=detail_getForm, post__isnull=True)
+    commentform = CommentTest()
+
+    if request.user.is_authenticated:
+        if board[:7] == "alerted": # 만약 알림에서 확인했을 경우! True를 False로 바꾼다! (읽음 느낌)
+            change = get_object_or_404(Commentalertcontent, id=board[7:], profile_name=request.user.profile)
+            change.view = False
+            change.save()
+        
+    #댓글이 나타나지 않아서 위치를 수정
+    response = render(request, 'form_detail.html', {'detail_getForm':detail_getForm, 'commentform':commentform, 'detail_getComment':detail_getComment, 'page':page,})
 
     if request.COOKIES.get(cookie_name) is not None:
         cookies = request.COOKIES.get(cookie_name)
@@ -106,16 +117,6 @@ def shw_form(request, board, id): #글의 자세한 내용 보여주기
         detail_getForm.hits += 1
         detail_getForm.save()
         return response
-
-    #댓글 보여주기
-    detail_getComment = Comment.objects.filter(main_post=detail_getForm, post__isnull=True)
-    commentform = CommentTest()
-
-    if request.user.is_authenticated:
-        if board[:7] == "alerted": # 만약 알림에서 확인했을 경우! True를 False로 바꾼다! (읽음 느낌)
-            change = get_object_or_404(Commentalertcontent, id=board[7:], profile_name=request.user.profile)
-            change.view = False
-            change.save()
 
     return render(request, 'form_detail.html', {'detail_getForm':detail_getForm, 'commentform':commentform, 'detail_getComment':detail_getComment, 'page':page,})
 

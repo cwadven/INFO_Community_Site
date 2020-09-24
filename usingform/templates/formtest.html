@@ -296,7 +296,12 @@ window.onload = function(){
 {% for i in important_board %}
 <div style="margin-bottom: 10px;display:table;"><span style="display:table-cell;vertical-align:middle;background-color:{{i.post.category.color}};" class="badge">{{i.post.category.board_name}}</span><a style="display:table-cell;padding-left: 5px;" href="{% url 'forms:shw_form' i.post.category.board_url_name i.post.id %}">{{i.post.title_short}}</a></div>
 {% endfor %}
+
+<!-- 디자인 때문에 좀 복잡합니다 -->
+<!-- 슈퍼유저가 아니면 공지사항 글쓰기 기능 안보이게 만들기 -->
 {% if user.is_anonymous %}
+    <div style="display: flex;justify-content: space-between;">
+{% elif board_url_name == "notice" and not user.is_superuser %}
     <div style="display: flex;justify-content: space-between;">
 {% else %}
     <div>
@@ -304,7 +309,7 @@ window.onload = function(){
 
     <h2>{{board_name}}</h2>
     
-{% if user.is_anonymous %}
+{% if board_url_name == "notice" and not user.is_superuser or user.is_anonymous %}
 <!-- 디자인 때문에 좀 복잡합니다 -->
 <form method="GET" style="text-align:right; margin-left:8px;" action="{% url 'forms:selectform' board_url_name %}">
     <span class="form-inline">
@@ -317,6 +322,7 @@ window.onload = function(){
 
 {% if user.is_authenticated %}
 <div style="display: flex;justify-content: space-between;">
+{% if user.is_superuser and board_url_name == "notice" %}
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">글쓰기</button>
 <form method="GET" style="text-align: right;margin-left:8px;" action="{% url 'forms:selectform' board_url_name %}">
     <div class="form-inline">
@@ -325,7 +331,17 @@ window.onload = function(){
     </div>
 </form>
 </div>
+{% elif board_url_name != "notice" %}
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">글쓰기</button>
+<form method="GET" style="text-align:right; margin-left:8px;" action="{% url 'forms:selectform' board_url_name %}">
+    <span class="form-inline">
+        <input style="width: 150px;margin-right: 5px;" type="text" class="form-control" name="search">
+        <input type="submit" value="🔍">
+    </span>
+</form>
+{% endif %}
 </div>
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}

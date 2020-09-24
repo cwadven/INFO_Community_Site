@@ -14,7 +14,7 @@ def add_link(value):
 
     if tags:
         for tag in tags:
-            main_text = re.sub(r'\#'+tag.tag_name+r'\b', '<a href=/board/'+category+'/?search='+tag.tag_name+">"+tag.tag_name+'</a>', main_text)
+            main_text = re.sub(r'\#'+tag.tag_name+r'\b', '<a style="color:#B760FF;" href=/board/'+category+'/?search='+tag.tag_name+">#"+tag.tag_name+'</a>', main_text)
         return main_text
     else:
         return main_text

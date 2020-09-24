@@ -64,7 +64,8 @@
             margin-top: 0;
         }
 
-        @media (min-width:300px) and (max-width:768px) {
+        /* flickity 때문에 해당 휴대폰 넓이에 따라 설정 */
+        @media (min-width:250px) and (max-width:450px) {
             .gallery {
                 height: 236px;
             }
@@ -81,7 +82,41 @@
             }
         }
 
-        @media (min-width:1200px) {
+        @media (min-width:450px) and (max-width:700px) {
+            .gallery {
+                height: 236px;
+            }
+
+            .gallery-cell {
+                width: 30%;
+                height: 236px;
+                border-color: rgb(170, 170, 170);
+            }
+
+            .gallery-cell-title{
+                font-weight: bold;
+                padding: 5px;
+            }
+        }
+
+        @media (min-width:700px) and (max-width:1120px) {
+            .gallery {
+                height: 236px;
+            }
+
+            .gallery-cell {
+                width: 25%;
+                height: 236px;
+                border-color: rgb(170, 170, 170);
+            }
+
+            .gallery-cell-title{
+                font-weight: bold;
+                padding: 5px;
+            }
+        }
+
+        @media (min-width:1120px) {
             .gallery {
                 height: 35vh;
             }
@@ -97,8 +132,6 @@
                 padding: 5px;
             }
         }
-
-        /* flickity 때문에 */
 </style>
 {% block name %}
 {% endblock %}

@@ -5,10 +5,9 @@ from django.db.models import Count
 # Create your views here.
 def main_show(request):
     show_all = Category.objects.all()
-    #Defaultform.objects.filter()
 
     #이미지 있는 게시글 가져오기
-    image_board = Defaultform.objects.filter(category__board_url_name='freeboard').annotate(num_item=Count('image')).filter(num_item__gt=0)[:5]
+    image_board = Defaultform.objects.filter(category__board_url_name='infoboard').annotate(num_item=Count('image')).filter(num_item__gt=0).order_by("-created_at")[:5]
     
     return render(request, "main.html", {'show_all':show_all, 'image_board':image_board,})
 

@@ -624,13 +624,13 @@ window.onload = function(){
             <!-- 시작날짜 -->
             <div class="form-group">
               <label for="start_at" class="col-form-label">시작날짜 :</label>
-              <input type="date" class="form-control" id="start_at" name="start_at" value="{{detail_getForm.start_at}}" required>
+              <input type="date" class="form-control" id="start_at" name="start_at" value="{{detail_getForm.start_at|date:'Y-m-d'}}">
             </div>
 
             <!-- 종료날짜 -->
             <div class="form-group">
               <label for="end_at" class="col-form-label">종료날짜 :</label>
-              <input type="date" class="form-control" id="end_at" name="end_at" value="{{detail_getForm.end_at}}" required>
+              <input type="date" class="form-control" id="end_at" name="end_at" value="{{detail_getForm.end_at|date:'Y-m-d'}}">
             </div>
 
           </form>

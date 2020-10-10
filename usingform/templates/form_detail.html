@@ -534,6 +534,12 @@ window.onload = function(){
 </p>
 {% endif %}
 
+<!-- 날짜 -->
+{% if detail_getForm.start_at %}
+<b>[진행기간]</b><br>
+  {{detail_getForm.start_at}} ~ {{detail_getForm.end_at}}<br><br>
+{% endif %}
+
 <!-- 좋아요 즐겨 찾기 -->
 <p>
 <span class="badge badge-light">
@@ -614,6 +620,19 @@ window.onload = function(){
 
             <input id="image_modify" type="text" name="image_modify" value='' hidden>
             <input id="files_modify" type="text" name="files_modify" value='' hidden>
+
+            <!-- 시작날짜 -->
+            <div class="form-group">
+              <label for="start_at" class="col-form-label">시작날짜 :</label>
+              <input type="date" class="form-control" id="start_at" name="start_at" value="{{detail_getForm.start_at}}" required>
+            </div>
+
+            <!-- 종료날짜 -->
+            <div class="form-group">
+              <label for="end_at" class="col-form-label">종료날짜 :</label>
+              <input type="date" class="form-control" id="end_at" name="end_at" value="{{detail_getForm.end_at}}" required>
+            </div>
+
           </form>
         </div>
         <div class="modal-footer">

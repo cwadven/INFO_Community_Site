@@ -1,4 +1,5 @@
 {% extends 'layer.html' %}
+{% load static %}
 {% block contents %}
 <style>
     /* flickity 때문에 */
@@ -8,9 +9,7 @@
     }
 
     .component {
-        border-color:rgb(177, 177, 177);
-        border-style: solid;
-        border-width: 1px;
+        background-color:#EFEFEF;
         padding:10px;
         margin:10px 0px;
         border-radius: 5px;
@@ -18,15 +17,17 @@
 
     .main_function{
         background-size:30px auto;
-        background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/768px-Python-logo-notext.svg.png');
+        background-image:url("{% static 'wkubot.png' %}");
         background-repeat:no-repeat;
         background-position:15px center;
-        width:60%;color:black;
+        width:85%;
+        color:#595959;
         display:inline-block;
         text-align: center;
-        background-color: aquamarine;
-        margin:7px;font-size: large;
-        border-radius: 50px;
+        background-color: #A8DCE5;
+        margin:7px;
+        font-size: medium;
+        border-radius: 10px;
         padding: 5px;
     }
 

@@ -396,34 +396,35 @@ window.onload = function(){
 
 <!-- 모든 글 -->
 {% for form_contents in getForm %}
-<p style="display: flex;">
-    {% if form_contents.author.Image %}
-    <img alt="{{form_contents.author.Name}}" style="border-radius: 5px;margin-right:8px;" width="50" height="50" src={{form_contents.author.Image.url}}>
+<a style="color: black;text-decoration:none;" href="{% url 'forms:shw_form' form_contents.category.board_url_name form_contents.id %}">
+<div class="media">
+    <!-- 이미지가 있을 경우 추후에 쿼리셋 조정 필요 -->
+    {% if form_contents.image_set.all|length %}
+    <img class="mr-3" height="100px" width="70px" src="{{form_contents.image_set.all.0.image.url}}">
     {% else %}
-    <img alt="{{form_contents.author.Name}}" style="border-radius: 5px;margin-right:8px;" width="50" height="50" src=https://image.flaticon.com/icons/svg/634/634741.svg>
+    <img class="mr-3" height="100px" width="70px" src="https://image.flaticon.com/icons/svg/634/634741.svg" alt="NO_IMAGE">
     {% endif %}
-    <span>
-    <b>{{form_contents.author.Name}}</b><br>
-    <em>작성 : {{form_contents.created_at|date:"m/d H:i"}}</em>
-    </span>
-</p>
+    <div class="media-body" style="overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">
+        <h5 class="mt-0">
+            <b>{{form_contents.title_short}}</b>
+            {% if form_contents.image_set.all %}
+            🎨
+            {% endif %}
+            {% if form_contents.files_set.all %}
+            💾
+            {% endif %}
+            <!-- 끝났는지 판단 -->
+            {% if form_contents.is_ended %}
+                <span class="badge badge-secondary">종료</span>
+            {% endif %}
+        </h5>
+        작성일 : {{form_contents.created_at|date:"m/d H:i"}}<br>
+        <div class="mt-2" style="color:rgb(145, 145, 145);overflow: hidden;text-overflow:ellipsis;">{{form_contents.body}}</div>
+    </div>
+</div>
+</a>
 
-<p>
-</p>
-
-<h3>
-{{form_contents.title_short}} 
-{% if form_contents.image_set.all %}
-🎨
-{% endif %}
-{% if form_contents.files_set.all %}
-💾
-{% endif %}
-<!-- 끝났는지 판단 -->
-{% if form_contents.is_ended %} <span class="badge badge-secondary">종료</span>{% endif %}
-</h3>
-
-<p>
+<p class="mt-1">
     <span class="badge badge-light">
         댓글 : {{form_contents.comment_set.all|length}} 
     </span>
@@ -434,8 +435,6 @@ window.onload = function(){
         조회수 : {{form_contents.hits}}
     </span>
 </p>
-
-<a href="{% url 'forms:shw_form' form_contents.category.board_url_name form_contents.id %}">자세히 보기</a> 
 <hr>
 {% endfor %}
 

@@ -13,6 +13,8 @@ from PIL import ExifTags
 from io import BytesIO
 from django.core.files import File
 
+import datetime
+
 register = template.Library()
 
 # Create your models here.
@@ -57,6 +59,16 @@ class Defaultform(TimeStampedModel):
         for t in tags:
             tag, tag_created = Tag.objects.get_or_create(tag_name=t)
             self.tag_set.add(tag)
+    
+    #끝난 게시물인지?
+    def is_ended(self):
+        try:
+            if self.end_at > datetime.date.today():
+                return False
+            else:
+                return True
+        except:
+            return False
 
     #이미지 하나만 보여주기
     def get_first_image(self):

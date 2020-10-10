@@ -393,6 +393,7 @@ window.onload = function(){
 {% endif %}
 {% endfor %}
 <hr>
+
 <!-- 모든 글 -->
 {% for form_contents in getForm %}
 <p style="display: flex;">
@@ -411,13 +412,15 @@ window.onload = function(){
 </p>
 
 <h3>
-{{form_contents.title_short}}
+{{form_contents.title_short}} 
 {% if form_contents.image_set.all %}
 🎨
 {% endif %}
 {% if form_contents.files_set.all %}
 💾
 {% endif %}
+<!-- 끝났는지 판단 -->
+{% if form_contents.is_ended %} <span class="badge badge-secondary">종료</span>{% endif %}
 </h3>
 
 <p>
@@ -431,6 +434,7 @@ window.onload = function(){
         조회수 : {{form_contents.hits}}
     </span>
 </p>
+
 <a href="{% url 'forms:shw_form' form_contents.category.board_url_name form_contents.id %}">자세히 보기</a> 
 <hr>
 {% endfor %}

@@ -30,7 +30,9 @@ class Defaultform(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,)
     hits = models.PositiveIntegerField(default=0)
     tag_set = models.ManyToManyField('Tag', blank=True)
-
+    start_at = models.DateField(blank=True, null=True)
+    end_at = models.DateField(blank=True, null=True)
+    
     class Meta:
         ordering = ['-id', ]
 

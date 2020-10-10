@@ -1,67 +1,60 @@
 {% extends 'mainlayout/mainlayer.html' %}
+{% load static %}
 {% block name %}
 <link rel="stylesheet" href="https://unpkg.com/flickity@2.2.1/dist/flickity.css" media="screen">
 <script src="https://unpkg.com/flickity@2.2.1/dist/flickity.pkgd.min.js"></script>
 
 <div style="display: flex;justify-content: space-around;">
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('https://www.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkuhome.png' %}"/>
         </div>
         <span style="font-size: 80%;">학교<br>홈페이지</span>
     </div>
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('http://intra.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkuweb.png' %}"/>
         </div>
         <span style="font-size: 80%;">웹정보<br>서비스</span>
     </div>
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('https://www.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkualert.png' %}"/>
         </div>
         <span style="font-size: 80%;">학사<br>공지</span>
     </div>
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('https://www.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkudate.png' %}"/>
         </div>
         <span style="font-size: 80%;">학사<br>일정</span>
     </div>
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('https://www.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkumon.png' %}"/>
         </div>
         <span style="font-size: 80%;">장학<br>공지</span>
     </div>
     <div style="text-align: center;line-height:normal;cursor:pointer;" onClick="window.open('http://elibrary.wku.ac.kr/')">
-        <div style="background-color: grey;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
+        <div style="background-color: #EFEFEF;border-radius: 50px;width: 50px;height: 50px;margin: auto;">
             <!-- 이미지 넣기 -->
+            <img width="50" height="50" src="{% static 'wkudorm.png' %}"/>
         </div>
         <span style="font-size: 80%;">도서관</span>
     </div>
 </div>
 
 <div class="component">
-<div style="padding:7px;" class="badge badge-pill badge-info">주요정보</div>
+<div>
+    <img width="30" height="30" src="{% static 'important.png' %}"/> 주요정보
+</div>
 <hr style="border-style: dashed;">
-<!-- 원래 처음 챗봇 형태 -->
-<!-- <div style="display: flex;justify-content: space-evenly;text-align: center;">
-    <div style="width: 45%;">
-        <a href="{% url 'mainpage:goto_chatbot' %}">
-        <div style="height:25vw;max-height: 300px;border-radius: 10px;margin:auto">
-            <img style="border-style:outset;border-color:aliceblue;" width='100%' height="100%" src="https://www.traveltimes.co.kr/news/photo/201807/104352_482_1650.jpg">
-        </div>
-        </a>
-        <span>챗봇 사용하기</span>
-    </div>
-    <div style="width: 45%;">
-        <div style="height:25vw;max-height: 300px;border-radius: 10px;background-color: grey;margin:auto">
-            
-        </div>
-        <span>영상 자료 확인</span>
-    </div>
-</div> -->
+
 <div style="text-align: center;">
     <!-- 배경화면으로 옆으로 보이게 하기 -->
     <a class="main_function" href="{% url 'mainpage:goto_chatbot' %}">챗봇 사용하기</a>
@@ -76,7 +69,9 @@
 
 <div class="component">
     <a style="float: right;" href="{% url 'forms:selectform' 'infoboard' %}">더보기 ></a>
-    <div style="padding:7px;" class="badge badge-pill badge-info">추천정보</div>
+    <div>
+        <img width="30" height="30" src="{% static 'recommend.png' %}"/> 추천정보
+    </div>
     <hr style="border-style: dashed;">
     <!-- 해당 개시글로 가기 및 첫번째 이미지 기준으로 섬네일 보이게하기 -->
     <div style="margin-top:10px;" class="gallery js-flickity" data-flickity-options='{ "freeScroll": "true", "contain": true, "prevNextButtons": false,"pageDots": false,"imagesLoaded": true, "setGallerySize": false}'>

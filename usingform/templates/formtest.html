@@ -404,9 +404,9 @@ window.onload = function(){
     {% else %}
     <img class="mr-3" height="100px" width="70px" src="https://image.flaticon.com/icons/svg/634/634741.svg" alt="NO_IMAGE">
     {% endif %}
-    <div class="media-body" style="overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">
+    <div class="media-body" style="overflow: hidden;white-space:nowrap;">
         <h5 class="mt-0">
-            <b>{{form_contents.title_short}}</b>
+            <b style="white-space:normal;">{{form_contents.title_short}}</b>
             {% if form_contents.image_set.all %}
             🎨
             {% endif %}
@@ -419,7 +419,7 @@ window.onload = function(){
             {% endif %}
         </h5>
         작성일 : {{form_contents.created_at|date:"m/d H:i"}}<br>
-        <div class="mt-2" style="color:rgb(145, 145, 145);overflow: hidden;text-overflow:ellipsis;">{{form_contents.body}}</div>
+        <div class="mt-1" style="color:rgb(145, 145, 145);overflow: hidden;text-overflow:ellipsis;">{{form_contents.body}}</div>
     </div>
 </div>
 </a>

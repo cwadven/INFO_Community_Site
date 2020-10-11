@@ -13,7 +13,7 @@ import datetime
 
 from django.db.models import Q
 
-def selectform(request, board="notice"): #작성하기 및 전체 글 보여주기
+def selectform(request, board): #작성하기 및 전체 글 보여주기
     if request.session.get('page'): #저장된 위치 삭제
         del request.session['page']
 
@@ -21,7 +21,12 @@ def selectform(request, board="notice"): #작성하기 및 전체 글 보여주�
     getCategory = get_object_or_404(Category, board_url_name=board) #board는 url로 통해서 category에 선택하는 게시판을 클릭하면 board가 들어와짐
 
     if request.method == 'POST':
-        form = FormTest(request.POST)
+        #infoboard 게시판이 아닐 경우는 그냥 start랑 end 없이하기
+        if board == "infoboard":
+            form = FormTest(request.POST)
+        else:
+            form = NomalFormTest(request.POST)
+
         imageform = ImageTest(request.POST, request.FILES)
         filesform = FilesTest(request.POST, request.FILES)
         
@@ -50,7 +55,11 @@ def selectform(request, board="notice"): #작성하기 및 전체 글 보여주�
             messages.info(request, '생성 중 오류가 났습니다!')  
             return redirect('/board/'+str(board))
     else:
-        form = FormTest()
+        #infoboard 게시판이 아닐 경우는 그냥 start랑 end 없이하기
+        if board == "infoboard":
+            form = FormTest()
+        else:
+            form = NomalFormTest()
         imageform = ImageTest()
         filesform = FilesTest()
 

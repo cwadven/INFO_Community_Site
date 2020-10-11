@@ -58,7 +58,7 @@
 <div style="text-align: center;">
     <!-- 배경화면으로 옆으로 보이게 하기 -->
     <a class="main_function" href="{% url 'mainpage:goto_chatbot' %}">챗봇 사용하기</a>
-    <a class="main_function" href="#">키워드 생각중</a>
+    <a class="main_function" href="{% url 'mainpage:goto_chatbot_button' %}">키워드 생각중</a>
     {% for i in show_all %}
         {% if i.board_url_name != "notice" %}        
             <a class="main_function" href="{% url 'forms:selectform' i.board_url_name %}">{{i.board_name}}</a>

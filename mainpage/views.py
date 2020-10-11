@@ -14,3 +14,6 @@ def main_show(request):
 
 def goto_chatbot(request):
     return render(request, "chatbot.html",{})
+
+def goto_chatbot_button(request):
+    return render(request, "chatbot_button.html",{})

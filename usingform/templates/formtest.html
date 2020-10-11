@@ -402,7 +402,7 @@ window.onload = function(){
     {% if form_contents.image_set.all|length %}
     <img class="mr-3" height="100px" width="70px" src="{{form_contents.image_set.all.0.image.url}}">
     {% else %}
-    <img class="mr-3" height="100px" width="70px" src="https://image.flaticon.com/icons/svg/634/634741.svg" alt="NO_IMAGE">
+    <!-- 이미지 없음 -->
     {% endif %}
     <div class="media-body" style="overflow: hidden;white-space:nowrap;">
         <h5 class="mt-0">

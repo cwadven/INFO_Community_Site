@@ -455,15 +455,9 @@ window.onload = function(){
 {% endif %}
 
 <hr>
-<!-- 알림 설정 -->
-{% if user.is_authenticated %}
-<p>게시글 알림 활성화 : <span onclick="ajax_donot_alert('{{detail_getForm.id}}', this)">{{detail_getForm|board_alert:request.user.username|safe}}</span></p>
-{% endif %}
-
-
 <p></p>
   <!-- 작성자 프로필 사진 -->
-  <div style="display: flex;">
+  <div style="display: flex;padding:10px;border-radius: 5px;background:#EFEFEF;">
   {% if detail_getForm.author.Image %}
   <img alt="{{detail_getForm.author.Name}}" style="border-radius: 5px;" width="50" height="50" src={{detail_getForm.author.Image.url}}>
   {% else %}
@@ -477,6 +471,11 @@ window.onload = function(){
   </span>
   </div>
 <p></p>
+
+<!-- 알림 설정 -->
+{% if user.is_authenticated %}
+<p>게시글 알림 활성화 : <span onclick="ajax_donot_alert('{{detail_getForm.id}}', this)">{{detail_getForm|board_alert:request.user.username|safe}}</span></p>
+{% endif %}
 
 <!-- 제목 -->
 <h3><b>{{detail_getForm.title}}</b></h3>

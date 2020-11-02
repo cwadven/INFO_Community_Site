@@ -25,7 +25,7 @@ SECRET_KEY = 'qk7xevfhmzc(pohrb43p$0w$6p+6s067)1_w66q03esm)m%1h9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["readly.shop"]
+ALLOWED_HOSTS = ["readly.shop", "wkudorm.iptime.org"]
 
 # Application definition
 

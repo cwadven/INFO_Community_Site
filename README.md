@@ -99,7 +99,7 @@ url : http://localhost:8000/account/signup/
 
 <h3 align="center">마이페이지</h3>
 <p align="center">
-<img alt="studentcare" src="https://github.com/cwadven/marketing/blob/master/assets/mypage.PNG"/>
+<img alt="studentcare" src="https://github.com/cwadven/marketing/blob/master/assets/my_page.PNG"/>
 </p>
 
 ~~~

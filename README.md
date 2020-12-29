@@ -153,7 +153,7 @@ http://readly.shop/
 
 ## 개발자
 
-**👤 이창우**
+**👤 이창우 [메인 개발]**
 
 - Github : https://github.com/cwadven
 - Backend : Django
